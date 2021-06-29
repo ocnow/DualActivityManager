@@ -8,22 +8,59 @@
     tools:context=".MainActivity"
     android:transitionGroup="true">
 
-
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Widget"
-        android:id="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp" />
+        android:id="@+id/rel1">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        <TextView android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="20:21"
+            android:textSize="40dp"/>
+
+        <!--<Button
+            android:id="@+id/button"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="W" />-->
+
+        <ImageButton
+            android:id="@+id/imagebutton"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_action_name"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
-        android:layout_marginTop="39dp"
-        android:text="Second Button"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/rel1">
+
+        <TextView android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="20:32"
+            android:textSize="40dp"/>
+
+        <!--<Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Second Button"
+            android:layout_alignParentRight="true"/>-->
+
+        <ImageButton
+            android:id="@+id/imagebutton1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_action_name"/>
+    </RelativeLayout>
 
 </RelativeLayout>
