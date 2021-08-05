@@ -28,8 +28,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="end"
-            android:src="@drawable/ic_action_name" />
+            android:gravity="end"/>
+            <!--android:src="@drawable/ic_stop" -->
 
     </LinearLayout>
 
@@ -57,17 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="end"
-            android:src="@drawable/ic_action_name" />
+            />
+            <!--android:src="@drawable/ic_stop"-->
 
     </LinearLayout>
 
     <!-- Update widget button -->
-    <Button
-        android:id="@+id/button_update"
-        style="@style/AppWidgetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/section_id1"
-        android:layout_centerHorizontal="true"
-        android:text="Update now" />
 </RelativeLayout>
