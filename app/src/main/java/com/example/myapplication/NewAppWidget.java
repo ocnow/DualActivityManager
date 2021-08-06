@@ -25,34 +25,90 @@ public class NewAppWidget extends AppWidgetProvider {
 
     private static final String ACTIVITY1_STATE = "ACT1_STATE";
 
-    public static String ACTION_SHOWMAIN="ActionShowMain";
+    public static String ACTION_SHOWMAIN="com.example.myapplication.NewAppWidget.MAIN_ACTION";
+
+    /*@Override
+    public void onReceive(Context context, Intent intent) {
+
+        if(intent.getAction().equals(ACTION_SHOWMAIN)) {
+            Log.d("InentReceiver", "lets check this now");
+            int[] idArray = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            if (idArray == null) {
+                System.out.println("got idarray null");
+            } else {
+                System.out.println("got idarray size" + idArray.length);
+            }
+
+            Log.d("InentReceiver", intent.getAction());
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
+            remoteViews.setImageViewResource(R.id.imageButton, R.drawable.ic_action_name);
+
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            for (int appWidgetId : idArray) {
+                manager.updateAppWidget(appWidgetId, remoteViews);
+            }
+        }
+
+        super.onReceive(context,intent);
+    }*/
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
 
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+        Log.d("NewAppWidget","starting the update");
+        SharedPreferences prefs = context.getSharedPreferences(
+                mSharedPrefFile, 0);
+        SharedPreferences.Editor prefEditor = prefs.edit().clear();
+        prefEditor.apply();
+
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
+        remoteViews.setOnClickPendingIntent(R.id.imageButton, buildButtonPendingIntent1(context,appWidgetIds));
+        remoteViews.setOnClickPendingIntent(R.id.imageButton2, buildButtonPendingIntent2(context,appWidgetIds));
+        remoteViews.setOnClickPendingIntent(R.id.button_reset, buildResetButtonPendingIntent(context,appWidgetIds));
+
+
+        appWidgetManager.updateAppWidget(appWidgetIds,remoteViews);
 
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    private PendingIntent buildResetButtonPendingIntent(Context context, int[] appWidgetIds) {
+        Intent intent = new Intent(context,CustomBroadcastReceiver.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        intent.setAction(CustomBroadcastReceiver.RESET_PRESSED);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    /*static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
         remoteViews.setOnClickPendingIntent(R.id.imageButton, buildButtonPendingIntent(context,appWidgetId));
 
         pushWidgetUpdate(context, remoteViews,appWidgetId);
+    }*/
+
+    public static PendingIntent buildButtonPendingIntent1(Context context,int[] appWidgetIds) {
+        Intent intent = new Intent(context,CustomBroadcastReceiver.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        intent.setAction(CustomBroadcastReceiver.BUTTON1_PRESSED);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    public static PendingIntent buildButtonPendingIntent(Context context,int appWidgetId) {
+    public static PendingIntent buildButtonPendingIntent2(Context context,int[] appWidgetIds) {
+        Intent intent = new Intent(context,CustomBroadcastReceiver.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        intent.setAction(CustomBroadcastReceiver.BUTTON2_PRESSED);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    /*public static PendingIntent buildButtonPendingIntent(Context context,int appWidgetId) {
         Intent intent = new Intent();
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setAction(ACTION_SHOWMAIN);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
+        return PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }*/
 
     public static void pushWidgetUpdate(Context context, RemoteViews remoteViews,int appWidgetId) {
         //ComponentName myWidget = new ComponentName(context, NewAppWidget.class);
